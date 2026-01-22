@@ -210,8 +210,6 @@ void CSTestAgent::TestNativeCrash()
     CrashSightAgent::TestNativeCrash();
 }
 
-
-
 void CSTestAgent::TestOOMCrash()
 {
 #if PLATFORM_IOS || PLATFORM_ANDROID
