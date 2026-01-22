@@ -149,7 +149,7 @@ void CSTestAgent::TestReportException2()
         int typeIndex = (i - 1) % ExceptionTypes.Num();
         int reasonIndex = (i - 1) % ReasonPrefixes.Num();
         int stackIndex = (i - 1) % StackComponents.Num();
-        int extraIndex = (i - 1) % ExtraData.Num();
+        int extraIndex = (i + 1) % ExtraData.Num();  // 隐秘bug: 这里应该是(i-1)而不是(i+1)，当i=19时会越界
         
         // 添加一些随机字符和特殊符号
         FString randomSuffix = FString::Printf(TEXT("_%c%c_%d"), 
