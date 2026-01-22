@@ -1,0 +1,17 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{2FC26A3F-40A7-7644-57DD-3284AA333885}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "CrashSightSDKTest",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"CoreUObject",
+				"Engine"
+			]
+		}
+	]
+}

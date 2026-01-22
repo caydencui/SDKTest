@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <init>
+        <copyDir src="$S(EngineDir)/Intermediate/UnzippedFrameworks/CrashSight/CrashSight.embeddedframework/CrashSight.framework" dst="$S(BuildDir)/Frameworks/CrashSight.framework"/>
+        <copyDir src="$S(EngineDir)/Intermediate/UnzippedFrameworks/CrashSightAdapter/CrashSightAdapter.embeddedframework/CrashSightAdapter.framework" dst="$S(BuildDir)/Frameworks/CrashSightAdapter.framework"/>
+        <copyDir src="$S(EngineDir)/Intermediate/UnzippedFrameworks/CrashSightCore/CrashSightCore.embeddedframework/CrashSightCore.framework" dst="$S(BuildDir)/Frameworks/CrashSightCore.framework"/>
+        <copyDir src="$S(EngineDir)/Intermediate/UnzippedFrameworks/CrashSightPlugin/CrashSightPlugin.embeddedframework/CrashSightPlugin.framework" dst="$S(BuildDir)/Frameworks/CrashSightPlugin.framework"/>
+    </init>
+</root>
