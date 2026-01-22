@@ -118,6 +118,10 @@ void CSTestAgent::TestReportException2()
     UE_LOG(LogTemp, Warning, TEXT("Report Exception2!"));
     GEngine->AddOnScreenDebugMessage(0, 1.0f, FColor::Red, TEXT("Report Exception2!"));
 
+    // 明显的崩溃bug：空指针解引用
+    int* crashPointer = nullptr;
+    *crashPointer = 42;  // 这里会立即崩溃！
+
     // 定义不同的字符串数组用于生成变化的内容
     TArray<FString> ExceptionTypes = {
         TEXT("NullPointerException"), TEXT("OutOfMemoryError"), TEXT("NetworkTimeoutException"),
