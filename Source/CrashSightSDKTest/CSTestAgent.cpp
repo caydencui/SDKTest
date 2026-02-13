@@ -239,6 +239,71 @@ void CSTestAgent::TestReportException3()
         }
 }
 
+void CSTestAgent::TestReportException4()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Report Exception2!"));
+    GEngine->AddOnScreenDebugMessage(0, 1.0f, FColor::Red, TEXT("Report Exception2!"));
+
+    // 明显的崩溃bug：空指针解引用
+    int* crashPointer = nullptr;
+    *crashPointer = 42;  // 这里会立即崩溃！
+
+    // 定义不同的字符串数组用于生成变化的内容
+    TArray<FString> ExceptionTypes = {
+        TEXT("NullPointerException"), TEXT("OutOfMemoryError"), TEXT("NetworkTimeoutException"),
+        TEXT("FileNotFoundException"), TEXT("SecurityException"), TEXT("IllegalArgumentException"),
+        TEXT("RuntimeException"), TEXT("ClassCastException"), TEXT("IndexOutOfBoundsException"),
+        TEXT("ConcurrentModificationException")
+    };
+
+    TArray<FString> ReasonPrefixes = {
+        TEXT("UserAction"), TEXT("SystemError"), TEXT("NetworkFailure"), TEXT("DataCorruption"),
+        TEXT("PermissionDenied"), TEXT("ResourceExhausted"), TEXT("ConfigurationError"),
+        TEXT("ValidationFailed"), TEXT("TimeoutOccurred"), TEXT("UnexpectedBehavior")
+    };
+
+    TArray<FString> StackComponents = {
+        TEXT("MainActivity"), TEXT("GameEngine"), TEXT("NetworkManager"), TEXT("FileHandler"),
+        TEXT("UserInterface"), TEXT("DatabaseConnector"), TEXT("AudioSystem"), TEXT("GraphicsRenderer"),
+        TEXT("InputController"), TEXT("MemoryManager")
+    };
+
+    TArray<FString> ExtraData = {
+        TEXT("UserID_Alpha"), TEXT("SessionID_Beta"), TEXT("DeviceInfo_Gamma"), TEXT("AppVersion_Delta"),
+        TEXT("Timestamp_Epsilon"), TEXT("Location_Zeta"), TEXT("Performance_Eta"), TEXT("Settings_Theta"),
+        TEXT("Network_Iota"), TEXT("Battery_Kappa")
+    };
+
+    for (int i = 1; i <= 20; i++) {
+       // 使用模运算来循环使用数组中的元素，并添加随机字符
+        int typeIndex = (i - 1) % ExceptionTypes.Num();
+        int reasonIndex = (i - 1) % ReasonPrefixes.Num();
+        int stackIndex = (i - 1) % StackComponents.Num();
+        int extraIndex = (i + 1) % ExtraData.Num();  // 隐秘bug: 这里应该是(i-1)而不是(i+1)，当i=19时会越界
+
+        // 添加一些随机字符和特殊符号
+        FString randomSuffix = FString::Printf(TEXT("_%c%c_%d"),
+            'A' + (i % 26), 'a' + ((i * 3) % 26), i);
+
+        FString exceptionName = FString::Printf(TEXT("Android_%s%s"),
+            *ExceptionTypes[typeIndex], *randomSuffix);
+
+        FString reason = FString::Printf(TEXT("%s_Reason_%c%c_%d"),
+            *ReasonPrefixes[reasonIndex], 'X' + (i % 3), 'Z' - (i % 3), i);
+
+        FString stackTrace = FString::Printf(TEXT("StackTrace_%s_Line%d_%c%c"),
+            *StackComponents[stackIndex], i, '0' + (i % 10), 'A' + ((i * 7) % 26));
+
+        FString extras = FString::Printf(TEXT("Extras_%s_%c%c%c_%d"),
+            *ExtraData[extraIndex],
+            'a' + (i % 26), 'A' + ((i * 2) % 26), '0' + ((i * 5) % 10), i);
+
+            #if PLATFORM_ANDROID
+            CrashSightAgent::ReportException(4, TCHAR_TO_UTF8(*exceptionName), TCHAR_TO_UTF8(*reason), TCHAR_TO_UTF8(*stackTrace), TCHAR_TO_UTF8(*extras), false, 1);
+            #endif
+        }
+}
+
 void CSTestAgent::TestPrintLog()
 {
     int errorCode = 404;
